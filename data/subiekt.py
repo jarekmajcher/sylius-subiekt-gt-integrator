@@ -16,7 +16,7 @@ class Subiekt(object):
                 [symbol] = T.tw_Symbol,
                 [rodzaj] = T.tw_Rodzaj,
                 [vat] = T.tw_IdVatSp,
-                [cena] = C.tc_CenaBrutto4,
+                [cena] = C.tc_""" + self.config.SUBIEKT_PRICE + """,
                 [stok] = M.st_Stan,
                 [rezerwacja] = M.st_StanRez,
                 [dostepne] = M.st_Stan - M.st_StanRez

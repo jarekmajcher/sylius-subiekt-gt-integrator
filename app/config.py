@@ -21,6 +21,7 @@ class AppConfig:
 
                     # Subiekt
                     cls._instance.SUBIEKT_WAREHOUSE = config['subiekt']['warehouse']
+                    cls._instance.SUBIEKT_PRICE = config['subiekt']['price']
 
                     # Sylius
                     cls._instance.SYLIUS_URL = config['sylius']['url']
