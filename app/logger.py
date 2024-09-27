@@ -58,8 +58,9 @@ class AppLogger:
     
     def save_log(self):
 
-        log_file_name = f"log_{self.config.CORE_DATETIME}.ansi"
-        log_file_path = os.path.join(self.config.APP_LOG_PATH, log_file_name)
+        if self.config.APP_LOG:
+            log_file_name = f"log_{self.config.CORE_DATETIME}.ansi"
+            log_file_path = os.path.join(self.config.APP_LOG_PATH, log_file_name)
 
-        with open(log_file_path, "w") as f:
-            f.write(self.file_console.export_text(styles=True))
+            with open(log_file_path, "w", encoding="utf-8") as f:
+                f.write(self.file_console.export_text(styles=True))
