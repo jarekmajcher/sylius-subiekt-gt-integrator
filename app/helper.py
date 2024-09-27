@@ -1,3 +1,5 @@
+from datetime import datetime
+
 class Helper:
 
     @staticmethod
@@ -77,3 +79,9 @@ class Helper:
                     })
 
         return combined
+    
+    @staticmethod
+    def add_timestamp(text):
+        timestamp = datetime.now().strftime("[%Y-%m-%d %H:%M:%S]")
+
+        return f"{timestamp} {text}"

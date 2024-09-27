@@ -1,49 +1,44 @@
 import os
 import sys
+import logging
 import time
+from datetime import datetime
 from collections import Counter
 from rich import print
 from rich.console import Console
 from rich.table import Table
 from alive_progress import alive_bar
 
+from app.config import AppConfig
+from app.logger import AppLogger
 from app.helper import Helper
 from data.subiekt import Subiekt
 from data.sylius import Sylius
 
 # Set vars
-console = Console()
-
-# Clear Screen
-os.system('cls' if os.name == 'nt' else 'clear')
+logger = AppLogger()
 
 # Sylius
-console.log(f"Pobieranie danych [bold blue]Sylius[/bold blue]")
-sys.stdout.write("\033[F")
-sys.stdout.write("\033[50G")
+logger.text(f"Pobieranie danych [bold blue]Sylius[/bold blue]")
 sylius = Sylius()
 sylius_variants = sylius.get_variants()
 sylius_variants_length = len(sylius_variants)
-print(f"[bold green]OK[/bold green] [white dim]({sylius_variants_length} produktów)[/white dim]")
+logger.status("OK", f"({sylius_variants_length} produktów)")
 time.sleep(1)
 
 # Subiekt
-console.log(f"Pobieranie danych [bold blue]Subiekt[/bold blue]")
-sys.stdout.write("\033[F")
-sys.stdout.write("\033[50G")
+logger.text(f"Pobieranie danych [bold blue]Subiekt[/bold blue]")
 subiekt = Subiekt()
 subiekt_products = subiekt.get_products()
 subiekt_products_length = len(subiekt_products)
-console.print(f"[bold green]OK[/bold green] [white dim]({subiekt_products_length} produktów)[/white dim]")
+logger.status("OK", f"({subiekt_products_length} produktów)")
 time.sleep(1)
 
 # Combine
-console.log(f"Łączenie danych do integracji")
-sys.stdout.write("\033[F")
-sys.stdout.write("\033[50G")
+logger.text(f"Łączenie danych do integracji")
 variants = Helper.combine_data(subiekt_products, sylius_variants)
 variants_length = len(variants)
-console.print(f"[bold green]OK[/bold green] [white dim]({variants_length} produktów)[/white dim]")
+logger.status("OK", f"({variants_length} produktów)")
 time.sleep(1)
 
 # Integrate
@@ -53,14 +48,13 @@ try:
 
         table.add_column("nr", style="dim")
         table.add_column("Wariant", no_wrap=True)
-        table.add_column("Aktualizacja", no_wrap=True, width=36)
-        table.add_column("Dane Subiekt", no_wrap=True, width=36)
-        table.add_column("Dane Sylius", no_wrap=True, width=36)
-        table.add_column("Status", width=12)
+        table.add_column("Aktualizacja", no_wrap=True, width=40)
+        table.add_column("Dane Subiekt", no_wrap=True, width=40)
+        table.add_column("Dane Sylius", no_wrap=True, width=40)
+        table.add_column("Status", width=16)
 
-        console.log(f"Start integracji")
+        logger.text(f"Start integracji")
         time.sleep(1)
-        console.print("")
 
         with alive_bar(variants_length) as bar:
             for index, variant in enumerate(variants):
@@ -116,15 +110,15 @@ try:
                 bar()
         
         # Wyświetlenie tabeli
-        console.print("", table, "")
+        logger.table(table)
 
-        console.log(f"[bold green]Integracja przebiegła prawidłowo![/bold green]")
+        logger.text(f"[bold green]Integracja przebiegła prawidłowo![/bold green]")
 
     else:
-        console.log(f"[bold yellow]Brak produktów do aktualizacji[/bold yellow]")
+        logger.text(f"[bold yellow]Brak produktów do aktualizacji[/bold yellow]")
 
 except Exception as e:
-    console.log(f"[bold red]Podczas integracji wystąpił błąd![/bold red]")
-    console.print("\r\n", e)
+    logger.exception(f"[bold red]Podczas integracji wystąpił błąd![/bold red]", e)
 
-console.print("")
+finally:
+    logger.save_log()

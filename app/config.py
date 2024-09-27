@@ -1,5 +1,6 @@
 import json
 import sys
+from datetime import datetime
 
 class AppConfig:
     _instance = None
@@ -12,6 +13,13 @@ class AppConfig:
                 args = sys.argv[1:]
                 with open(args[0] + '_config.json') as f:
                     config = json.load(f)
+
+                    # CORE
+                    cls._instance.CORE_DATETIME = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+
+                    # APP
+                    cls._instance.APP_LOG= config['app']['log']
+                    cls._instance.APP_LOG_PATH = config['app']['log_path']
                     
                     # MSSQL
                     cls._instance.MSSQL_SERVER = config['mssql']['server']
