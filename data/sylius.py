@@ -65,7 +65,8 @@ class Sylius(object):
                 channel_pricings[pricing['code']] = {
                     '@id': pricing['id'],
                     '@type': 'ChannelPricing',
-                    'price': pricing['price']
+                    'price': pricing['price'],
+                    'originalPrice': pricing['price']
                 }
             data['channelPricings'] = channel_pricings
 
