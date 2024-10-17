@@ -16,6 +16,7 @@ from data.subiekt import Subiekt
 from data.sylius import Sylius
 
 # Set vars
+config = AppConfig()
 logger = AppLogger()
 
 # Sylius
@@ -36,7 +37,7 @@ time.sleep(1)
 
 # Combine
 logger.text(f"Łączenie danych do integracji")
-variants = Helper.combine_data(subiekt_products, sylius_variants)
+variants = Helper.combine_data(subiekt_products, sylius_variants, config.APP_FULL_INTEGRATION)
 variants_length = len(variants)
 logger.status("OK", f"({variants_length} produktów)")
 time.sleep(1)

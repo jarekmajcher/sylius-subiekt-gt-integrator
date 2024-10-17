@@ -20,6 +20,7 @@ class AppConfig:
                     # APP
                     cls._instance.APP_LOG= config['app']['log']
                     cls._instance.APP_LOG_PATH = config['app']['log_path']
+                    cls._instance.APP_FULL_INTEGRATION = config['app']['full_integration']
                     
                     # MSSQL
                     cls._instance.MSSQL_SERVER = config['mssql']['server']

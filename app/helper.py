@@ -18,7 +18,7 @@ class Helper:
         return result_dict
 
     @staticmethod
-    def combine_data(subiekt_products, sylius_variants):
+    def combine_data(subiekt_products, sylius_variants, full_integration):
         combined = []
 
         for sylius_variant in sylius_variants:
@@ -58,7 +58,7 @@ class Helper:
                 is_same_type = subiekt_type == sylius_subiekt_type
 
                 # Create combined array
-                if not is_same_price or not is_same_stock or not is_same_code or not is_same_type:
+                if full_integration or not is_same_price or not is_same_stock or not is_same_code or not is_same_type:
                     pricing = []
                     for sylius_pricing_k, sylius_pricing_v in sylius_pricings.items():
                         pricing.append({

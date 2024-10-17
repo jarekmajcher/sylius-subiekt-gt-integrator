@@ -29,7 +29,8 @@ Zapisz plik jako default_config.json
     },
     "app": {
         "log": true,
-        "log_path": "C:\TMP\log\default\"
+        "log_path": "C:\TMP\log\default\",
+        "full_integration": true
     }
 }
 ```
