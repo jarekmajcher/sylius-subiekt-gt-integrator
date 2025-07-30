@@ -1,5 +1,5 @@
 # Sylius Subiekt GT integrator
-Ten skrypt służy do integracji cen oraz stanów magazynowych z Subiektem GT oraz sklepem internetowym Sylius.
+Skrypt odpowiada za synchronizację cen i stanów magazynowych pomiędzy Subiektem GT a sklepem internetowym opartym na Syliusie.
 
 ## Konfiguracja Subiektem GT
 
