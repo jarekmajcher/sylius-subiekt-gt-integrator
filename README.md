@@ -67,7 +67,7 @@ Zalecane jest utworzenie nowego użytkownika. Następnie można nadać mu uprawn
 
 ### 2. Rozszerzyć encję ProductVariant o dodatkowe pola.
 
-```PHP
+```php
 # src/Entity/Product/ProductVariant.php
 
 <?php
@@ -100,7 +100,7 @@ class ProductVariant extends BaseProductVariant
 
 ### 3. Dodać obsługę pól w serializerze
 
-```XML
+```xml
 # config/serialization/ProductVariant.xml
 
 <?xml version="1.0" ?>
