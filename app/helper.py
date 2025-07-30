@@ -50,7 +50,7 @@ class Helper:
                 # Is same vars
                 is_same_price = True
                 for sylius_pricing_k, sylius_pricing_v in sylius_pricings.items():
-                    if sylius_pricing_v['price'] != subiekt_price:
+                    if (sylius_pricing_v['price'] != subiekt_price and not sylius_pricing_v['appliedPromotions']) or sylius_pricing_v['originalPrice'] != subiekt_price:
                         is_same_price = False
 
                 is_same_stock = subiekt_stock == sylius_stock
