@@ -64,9 +64,12 @@ try:
                     + "[bold]Kod:[/bold] " + variant['code'] + "\n" \
                     + "[bold]Typ:[/bold] " + variant['type'] + "\n" \
                     + "[bold]Ceny:[/bold]"
-                
-                for index, item in enumerate(variant['pricing']):
-                    log_update += "\n" + item['code'] + " - " + "{:.2f}".format(item['price'] / 100)
+
+                for index, (key, item) in enumerate(variant['sylius_variant']['channelPricings'].items()):
+                    log_update += "\n" + key + ":"
+                    if not bool(item['appliedPromotions']):
+                        log_update += "\n - " + "Cena: {:.2f}".format(variant['subiekt_product']['cena'])
+                    log_update += "\n - " + "Cena oryginalna: {:.2f}".format(variant['subiekt_product']['cena'])
 
                 log_subiekt = "[bold]ID:[/bold] " + str(variant['subiekt_product']['id']) + "\n" \
                     + "[bold]Symbol:[/bold] " + str(variant['subiekt_product']['symbol']) + "\n" \
@@ -76,17 +79,19 @@ try:
                     + "[bold]Cena:[/bold] " + str(variant['subiekt_product']['cena']) + "\n"
 
                 log_sylius = "[bold]ID:[/bold] " + str(variant['sylius_variant']['id']) + "\n" \
-                    + "[bold]Kod:[/bold] " + str(variant['sylius_variant']['code']) + "\n" \
+                    + "[bold]code:[/bold] " + str(variant['sylius_variant']['code']) + "\n" \
                     + "[bold]onHand:[/bold] " + str(variant['sylius_variant']['onHand']) + "\n" \
                     + "[bold]onHold:[/bold] " + str(variant['sylius_variant']['onHold']) + "\n" \
-                    + "[bold]SubiektId:[/bold] " + str(variant['sylius_variant']['subiektId']) + "\n" \
-                    + "[bold]SubiektCode:[/bold] " + str(variant['sylius_variant']['subiektCode']) + "\n" \
-                    + "[bold]SubiektType:[/bold] " + str(variant['sylius_variant']['subiektType']) + "\n" \
-                    + "[bold]Ceny:[/bold] "
+                    + "[bold]subiektId:[/bold] " + str(variant['sylius_variant']['subiektId']) + "\n" \
+                    + "[bold]subiektCode:[/bold] " + str(variant['sylius_variant']['subiektCode']) + "\n" \
+                    + "[bold]subiektType:[/bold] " + str(variant['sylius_variant']['subiektType']) + "\n" \
+                    + "[bold]channelPricings:[/bold] "
 
                 for index, (key, item) in enumerate(variant['sylius_variant']['channelPricings'].items()):
-
-                    log_sylius += "\n" + key + " - " + "{:.2f}".format(item['price'] / 100)
+                    log_sylius += "\n" + key + ":"
+                    log_sylius += "\n - " + "price: {:.2f}".format(item['price'] / 100)
+                    log_sylius += "\n - " + "originalPrice: {:.2f}".format(item['originalPrice'] / 100)
+                    log_sylius += "\n - " + "appliedPromotions: " + (", ".join(p['code'] for p in item['appliedPromotions']) if item['appliedPromotions'] else "null")
 
                 row = [
                     str(index + 1),

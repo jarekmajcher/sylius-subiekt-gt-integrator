@@ -65,9 +65,12 @@ class Sylius(object):
                 channel_pricings[pricing['code']] = {
                     '@id': pricing['id'],
                     '@type': 'ChannelPricing',
-                    'price': pricing['price'],
                     'originalPrice': pricing['price']
                 }
+
+                if(not pricing['has_promotions']):
+                    channel_pricings[pricing['code']]['price'] = pricing['price']
+
             data['channelPricings'] = channel_pricings
 
 

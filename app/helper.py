@@ -64,7 +64,8 @@ class Helper:
                         pricing.append({
                             'id': sylius_pricing_v['@id'],
                             'code': sylius_pricing_k,
-                            'price': subiekt_price
+                            'price': subiekt_price,
+                            'has_promotions': bool(sylius_pricing_v['appliedPromotions'])
                         })
 
                     combined.append({
