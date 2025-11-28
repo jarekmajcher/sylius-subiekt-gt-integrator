@@ -89,8 +89,8 @@ try:
 
                 for index, (key, item) in enumerate(variant['sylius_variant']['channelPricings'].items()):
                     log_sylius += "\n" + key + ":"
-                    log_sylius += "\n - " + "price: {:.2f}".format(item['price'] / 100)
-                    log_sylius += "\n - " + "originalPrice: {:.2f}".format(item['originalPrice'] / 100)
+                    log_sylius += "\n - " + "price: " + ("{:.2f}".format(item['price'] / 100) if item['price'] is not None else "null")
+                    log_sylius += "\n - " + "originalPrice: " + ("{:.2f}".format(item['originalPrice'] / 100) if item['originalPrice'] is not None else "null")
                     log_sylius += "\n - " + "appliedPromotions: " + (", ".join(p['code'] for p in item['appliedPromotions']) if item['appliedPromotions'] else "null")
 
                 row = [
